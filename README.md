@@ -1,14 +1,20 @@
 # fbf
 
-A new Flutter package project.
+A library of helpers and extensions for Fivebyfive's flutter projects
 
-## Getting Started
+## Parts
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+```dart
+import 'package:fbf/dart_extensions.dart';
+import 'package:fbf/dart_models.dart';
+import 'package:fbf/dart.dart'; // all dart_*
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+import 'package:fbf/flutter_animation.dart';
+import 'package:fbf/flutter_color.dart';
+import 'package:fbf/flutter_routing.dart';
+import 'package:fbf/flutter_theme.dart';
+import 'package:fbf/flutter.dart'; // all flutter_*
+
+import 'package:fbf/fbf.dart'; // everything
+
+```
