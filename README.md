@@ -2,6 +2,14 @@
 
 A library of helpers and extensions for Fivebyfive's flutter projects
 
+## Installing
+
+```yaml
+dependencies:
+    fbf:
+        git: https://github.com/fivebyfive-se/library_fbf.git
+```
+
 ## Parts
 
 ```dart
