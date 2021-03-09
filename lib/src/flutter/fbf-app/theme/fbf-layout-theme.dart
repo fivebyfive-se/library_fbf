@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
-class FivebyfiveLayoutTheme {
-  FivebyfiveLayoutTheme({
+class FbfLayoutTheme {
+  FbfLayoutTheme({
     this.baseSize = 8.0,
     this.baseBorderWidth = 2.0
   }) :  this.border = FbfLayoutBorder(baseBorderWidth),
@@ -13,6 +13,18 @@ class FivebyfiveLayoutTheme {
 
   final FbfLayoutBorder border;
   final FbfLayoutEdge edgeInsets;
+
+  @override
+  int get hashCode => hashValues(baseSize, baseBorderWidth);
+
+  @override
+  bool operator ==(Object other)
+    => identical(this, other) || (
+      other.runtimeType == runtimeType &&
+        other is FbfLayoutTheme &&
+        baseSize == other.baseSize &&
+        baseBorderWidth == other.baseBorderWidth
+    );
 
   double size([double factor = 1.0])
     => _normalizeFactor(factor) * baseSize;

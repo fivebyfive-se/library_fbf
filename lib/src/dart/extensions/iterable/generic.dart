@@ -1,15 +1,17 @@
 import '../../models/tuple.dart';
 
-typedef MapIndexFunction<T,V> = V Function(T item, int index); 
-typedef MapReduceFunction<T,V> = V Function(V previous, T current, int index);
+typedef MapFunc<T,V> = V Function(T item);
+typedef MapIndexFunc<T,V> = V Function(T item, int idx); 
+typedef MapReduceFunc<T,V> = V Function(V prev, T curr, int idx);
+typedef CompFunc<T> = int Function(T a, T b);
 
 extension FbfIterableExtensionsGeneric on Iterable {
   /// Return a new iterable of unique items
-  Iterable<T> distinctBy<T,V>(V Function(T item) selectValue) sync* {
+  Iterable<T> distinctBy<T,V>(MapFunc<T,V> selector) sync* {
     final values = Set<V>();
 
     for (T item in this) {
-      final v = selectValue(item);
+      final v = selector(item);
       if (!values.contains(v)) {
         values.add(v);
         yield item;
@@ -18,13 +20,13 @@ extension FbfIterableExtensionsGeneric on Iterable {
   }
 
 
-  /// Get a slice of this iterable from [start] to [length],
-  /// filling out with [value] (or this.last) if this iterable is shorter
-  /// than [length]
-  Iterable<T> extend<T>(int length, [T value, int start = 0]) sync* {
+  /// Get a slice of this iterable from [start] to [len],
+  /// filling out with [val] (or this.last) if this iterable is shorter
+  /// than [len]
+  Iterable<T> extend<T>(int len, [T val, int start = 0]) sync* {
     if (start < this.length) {
-      yield length >= this.length ? (value ?? this.last) : this.elementAt(length);
-      yield* extend<T>(length, value, start + 1);
+      yield len >= this.length ? (val ?? this.last) : this.elementAt(len);
+      yield* extend<T>(len, val, start + 1);
     }
   }
 
@@ -33,60 +35,57 @@ extension FbfIterableExtensionsGeneric on Iterable {
   /// index is the key
   Iterable<MapEntry<int,T>> indexEntries<T>([int start = 0]) sync* {
     yield* mapIndex<T,MapEntry<int,T>>(
-      (item, index) => MapEntry<int,T>(index, item),
+      (item, idx) => MapEntry<int,T>(idx, item),
       start
     );
   }
 
+
   /// like [map], except also supplies index to callback
-  Iterable<V> mapIndex<T,V>(MapIndexFunction<T,V> action, [int start = 0]) sync* {
+  Iterable<V> mapIndex<T,V>(MapIndexFunc<T,V> f, [int start = 0]) sync* {
     if (start < length) {
-      yield action.call(this.elementAt(start), start);
-      yield* mapIndex<T,V>(action, start + 1);
+      yield f.call(this.elementAt(start), start);
+      yield* mapIndex<T,V>(f, start + 1);
     }
   }
 
+
   /// MapReduce with running reduction, or something like that.
   Iterable<Tuple3<V,T,int>> mapReduceIterable<T,V>(
-    MapReduceFunction<T,V> reducer, 
-    [
-      V initialValue,
+    MapReduceFunc<T,V> f, [
+      V inval,
       int start = 0
-    ]
-  ) sync* {
+  ]) sync* {
     if (start < length) {
       final current = elementAt(start);
-      final result = reducer.call(initialValue, current, start);
+      final result = f.call(inval, current, start);
 
       yield Tuple3<V,T,int>(result, current, start);
-      yield* mapReduceIterable<T,V>(reducer, result, start+1);
+      yield* mapReduceIterable<T,V>(f, result, start+1);
     }
   }
 
 
   /// More javascripty reduce
-  V mapReduce<T,V>(MapReduceFunction<T,V> reducer, [V initialValue])
-    => mapReduceIterable<T,V>(reducer, initialValue).last.item1;
+  V mapReduce<T,V>(MapReduceFunc<T,V> f, [V inval])
+    => mapReduceIterable<T,V>(f, inval).last.item1;
 
 
   /// Map and call to list, ensuring casts to right types
-  List<V> mapToList<T,V>(V Function(T item) f)
-    => this.map<V>(f).toListOf<V>();
+  List<V> mapToList<T,V>(MapFunc<T,V> f)
+    => this.map<V>((item) => f.call(item)).toListOf<V>();
     
 
   /// Sort iterable, returning result as a list
-  List<T> order<T>(int Function(T a, T b) comparator)
+  List<T> order<T>(CompFunc<T> f)
     => (
      this.toListOf<T>()
-        ..sort(comparator)
+        ..sort(f)
       ).toList();
 
 
   /// Decorate, sort, undecorate
-  List<T> schwartz<T,D>({
-    D Function(T item) decorator,
-    int Function(D a, D b) comparer,
-  }) => (
+  List<T> schwartz<T,D>({MapFunc<T,D> decorator, CompFunc<D> comparer}) => (
     this.toListOf<T>()
       .mapToList<T,Tuple2<T,D>>((v) => Tuple2<T,D>(v, decorator.call(v)))
         ..sort((a,b) => comparer.call(a.item2, b.item2))

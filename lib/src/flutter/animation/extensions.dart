@@ -1,4 +1,4 @@
-extension DurationExtensions on Duration {
+extension FbfDurationExtensions on Duration {
   Duration add(Duration other)
     => Duration(microseconds: this.inMicroseconds + other.inMicroseconds);
 

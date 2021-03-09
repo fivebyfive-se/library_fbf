@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
 extension CodeThemeExtension on ThemeData {
-  static CodeTheme _codeTheme;
+  static FbfCodeTheme _codeTheme;
   
-  CodeTheme get codeTheme => _codeTheme ?? CodeTheme();
-  set codeTheme(CodeTheme theme) => _codeTheme = theme;
+  FbfCodeTheme get codeTheme => _codeTheme ?? FbfCodeTheme();
+  set codeTheme(FbfCodeTheme theme) => _codeTheme = theme;
 
-  ThemeData withCodeTheme(CodeTheme codeTheme) {
+  ThemeData withCodeTheme(FbfCodeTheme codeTheme) {
     this.codeTheme = codeTheme;
     return this;
   }
 }
 
-class CodeTheme {
-  CodeTheme({
+class FbfCodeTheme {
+  FbfCodeTheme({
     this.subtitle1,
     this.subtitle2,
     this.bodyText1,
@@ -25,12 +25,12 @@ class CodeTheme {
   TextStyle bodyText1;
   TextStyle bodyText2;
 
-  CodeTheme copyWith({
+  FbfCodeTheme copyWith({
     TextStyle subtitle1,
     TextStyle subtitle2,
     TextStyle bodyText1,
     TextStyle bodyText2
-  }) => CodeTheme(
+  }) => FbfCodeTheme(
     subtitle1: subtitle1 ?? this.subtitle1,
     subtitle2: subtitle2 ?? this.subtitle2,
     bodyText1: bodyText1 ?? this.bodyText1,

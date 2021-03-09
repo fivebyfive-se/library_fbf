@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
-import '../color/extensions.dart';
+import '../../color.dart';
 
 class ColorTriad {
   ColorTriad(this.base, this.dark, this.light);
@@ -13,6 +13,22 @@ class ColorTriad {
   final Color base;
   final Color dark;
   final Color light;
+
+  @override
+  int get hashCode => hashValues(base.value, dark.value, light.value);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    } else if (other.runtimeType != runtimeType) {
+      return false;
+    }
+    return other is ColorTriad &&
+      other.base == base &&
+      other.dark == dark &&
+      other.light == light;
+  }
 
   LinearGradient toGradient(
     {AxisDirection direction = AxisDirection.down}

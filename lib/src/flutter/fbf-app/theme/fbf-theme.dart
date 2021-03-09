@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import '../color/extensions.dart';
+import '../../color.dart';
 
 import 'color-triad.dart';
-import 'font-theme.dart';
+import 'fbf-code-theme.dart';
+import 'fbf-font-theme.dart';
+import 'fbf-layout-theme.dart';
 
-class FivebyfiveTheme {
-  FivebyfiveTheme({
+class FbfTheme {
+  FbfTheme({
     this.fontTheme,
+    this.layoutTheme,
     this.brightness = Brightness.dark,
 
     this.background = Colors.black,
@@ -71,7 +74,8 @@ class FivebyfiveTheme {
       this.warning = warning ?? Colors.deepOrangeAccent
     ;
 
-  final FivebyfiveFontTheme fontTheme;
+  final FbfFontTheme fontTheme;
+  final FbfLayoutTheme layoutTheme;
 
   final Brightness brightness;
 
@@ -123,6 +127,71 @@ class FivebyfiveTheme {
   Color get focusAccent => isDark ? focusTriad.light : focusTriad.dark;
   Color get highlightAccent => isDark ? highlightTriad.light : highlightTriad.dark;
 
+  @override
+  int get hashCode => hashList([
+      brightness,
+      primaryTriad,
+      secondaryTriad,
+      tertiaryTriad,
+      focusTriad,
+      highlightTriad,
+      background,
+      foreground,
+      foregroundDisabled,
+      backgroundGradient,
+      logoBackgroundGradient,
+      drawerBackgroundGradient,
+      splashGradientStart,
+      splashGradientEnd,
+      cardBackground,
+      cardForeground,
+      dialogBackground,
+      dialogForeground,
+      appBarBackground,
+      appBarForeground,
+      bottomNavBackground,
+      bottomNavForeground,
+      bottomNavSelected,
+      bottomNavDisabled,
+      error,
+      warning,
+  ]);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    } else if (other.runtimeType != runtimeType) {
+      return false;
+    }
+    return other is FbfTheme &&
+      other.brightness == brightness &&
+      other.primaryTriad == primaryTriad &&
+      other.secondaryTriad == secondaryTriad &&
+      other.tertiaryTriad == tertiaryTriad &&
+      other.focusTriad == focusTriad &&
+      other.highlightTriad == highlightTriad &&
+      other.background == background &&
+      other.foreground == foreground &&
+      other.foregroundDisabled == foregroundDisabled &&
+      other.backgroundGradient == backgroundGradient &&
+      other.logoBackgroundGradient == logoBackgroundGradient &&
+      other.drawerBackgroundGradient == drawerBackgroundGradient &&
+      other.splashGradientStart == splashGradientStart &&
+      other.splashGradientEnd == splashGradientEnd &&
+      other.cardBackground == cardBackground &&
+      other.cardForeground == cardForeground &&
+      other.dialogBackground == dialogBackground &&
+      other.dialogForeground == dialogForeground &&
+      other.appBarBackground == appBarBackground &&
+      other.appBarForeground == appBarForeground &&
+      other.bottomNavBackground == bottomNavBackground &&
+      other.bottomNavForeground == bottomNavForeground &&
+      other.bottomNavSelected == bottomNavSelected &&
+      other.bottomNavDisabled == bottomNavDisabled &&
+      other.error == error &&
+      other.warning == warning;
+  }
 
   @protected
   Map<String,TextStyle> _codeHighlightTheme;
@@ -165,7 +234,6 @@ class FivebyfiveTheme {
     'strong': TextStyle(fontWeight: FontWeight.bold),
   });
  
-
 
   @protected
   ThemeData _themeData;

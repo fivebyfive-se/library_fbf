@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import '_page-route-base.dart';
 
-class FbfPageRoute extends FbfPageRouteBase {
+class FbfPageRoute {
   FbfPageRoute({
-    String routeName,
-    this.builder,
-  }) :  super(routeName);
+    @required this.routeName,
+    @required this.builder,
+  }) : assert(routeName != null),
+       assert(builder != null);
 
+  final String routeName;
   final WidgetBuilder builder;
 
   MapEntry<String, WidgetBuilder> toEntry()

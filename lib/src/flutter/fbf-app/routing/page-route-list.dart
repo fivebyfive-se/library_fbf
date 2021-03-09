@@ -7,25 +7,43 @@ class FbfPageRouteList {
 
   final List<FbfPageRoute> pageRoutes;
 
+  @override
+  int get hashCode => hashList(pageRoutes);
+
+  @override
+  bool operator ==(Object other)
+    => identical(this, other) || (
+      other.runtimeType == runtimeType
+        && other is FbfPageRouteList
+        && other.hashCode == hashCode
+    );
+
   int 
   get numRoutes => pageRoutes.length;
 
-  FbfPageRoute routeAt(int index) 
+  FbfPageRoute
+  routeAt(int index) 
     => index >= 0 && index < numRoutes ? pageRoutes[index] : null;
 
-  FbfPageRoute routeByName(String routeName)
+  FbfPageRoute
+  routeByName(String routeName)
     => routeExists(routeName) ? routeAt(indexOf(routeName)) : null;
 
-  bool routeExists(String routeName) => indexOf(routeName) >= 0;
+  bool
+  routeExists(String routeName)
+    => indexOf(routeName) >= 0;
 
-  int indexOf(String routeName)
+  int
+  indexOf(String routeName)
     => pageRoutes.indexWhere((r) => r.routeName == routeName);
 
   String
-  get initialRoute => pageRoutes.first.routeName;
+  get initialRoute
+    => pageRoutes.first.routeName;
 
   Map<String, WidgetBuilder>
-  get routes => Map.fromEntries(pageRoutes.map((r) => r.toEntry()));
+  get routes
+    => Map.fromEntries(pageRoutes.map((r) => r.toEntry()));
 
   FbfPageRoute nextRoute(String routeName) {
     final idx = indexOf(routeName);

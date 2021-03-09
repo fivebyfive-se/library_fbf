@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
-import '../../dart/models/range.dart';
+import '../../../dart/models/range.dart';
 
-import 'code-theme.dart';
-export 'code-theme.dart';
-
+import 'fbf-code-theme.dart';
 
 typedef TextThemeBuilder = TextTheme Function(TextTheme);
 
-class FivebyfiveFontTheme {
-  FivebyfiveFontTheme(
+class FbfFontTheme {
+  FbfFontTheme(
     this.fontHeadings,
     this.fontBody, 
     this.fontCode, {
@@ -40,7 +38,7 @@ class FivebyfiveFontTheme {
   double calcFontSize(double ratio) 
     => fontSizeRange.lerp(ratio);
 
-  CodeTheme _codeTheme;
+  FbfCodeTheme _codeTheme;
   TextTheme _textTheme;
   TextStyle _lastStyle;
 
@@ -110,10 +108,10 @@ class FivebyfiveFontTheme {
   );
 
   TextTheme get textTheme => _textTheme ?? (_textTheme = _createTextTheme());
-  CodeTheme get codeTheme => _codeTheme ?? (_codeTheme = _createCodeTheme());
+  FbfCodeTheme get codeTheme => _codeTheme ?? (_codeTheme = _createCodeTheme());
 
   @protected
-  CodeTheme _createCodeTheme() => CodeTheme(
+  FbfCodeTheme _createCodeTheme() => FbfCodeTheme(
     subtitle1: textTheme.subtitle1.copyWith(fontFamily: fontCode),
     subtitle2: textTheme.subtitle2.copyWith(fontFamily: fontCode),
     bodyText1: textTheme.bodyText1.copyWith(fontFamily: fontCode),
