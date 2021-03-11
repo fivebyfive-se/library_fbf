@@ -1,3 +1,4 @@
+import 'package:fbf/ryb.dart';
 import 'package:flutter/painting.dart';
 
 import 'ryb-helpers.dart';
@@ -11,6 +12,12 @@ class RYBColor {
               ((y & 0xff) << 8)  | 
                (b & 0xff);
   
+  static RYBColor fromList(List<int> channels)
+    => RYBColor(rxbFromList(channels));
+
+  static RYBColor fromNormalizedList(List<double> channels)
+    => RYBColor.fromList(channels.map((c) => (c * 255).toInt()).toList());
+    
   static RYBColor fromColor(Color c)
     => RYBColor(rgbToRyb(c.value));
 
@@ -61,6 +68,16 @@ class RYBColor {
   RYBColor withOpacity(double o)
     => RYBColor(rxbSetA(value, (o.clamp(0, 1.0) * 0xff).round()));
 
+  RYBColor withChannel(int i, int v) 
+    =>  i == 0 ? withAlpha(v)
+      : i == 1 ? withRed(v)
+      : i == 2 ? withYellow(v)
+      : i == 3 ? withBlue(v) 
+      : this;
+
+  RYBColor withNormalizedChannel(int i, double v)
+    => withChannel(i, (v * 255).round());
+
   RYBColor deltaAlpha(int a)  => withAlpha(alpha + a);
   RYBColor deltaRed(int r)    => withRed(red + r);
   RYBColor deltaYellow(int y) => withYellow(yellow + y);
@@ -88,6 +105,10 @@ class RYBColor {
   }
 
   Color toColor() => Color(rybToRgb(value));
+  HSLColor toHSLColor() => HSLColor.fromColor(toColor());
+
+  List<int> toList() => <int>[alpha, red, yellow, blue];
+  List<double> toNormalizedList() => toList().map((v) => v / 255).toList();
 
   double computeLuminance()
     => toColor().computeLuminance();

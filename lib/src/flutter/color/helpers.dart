@@ -35,13 +35,23 @@ Color colorFromHex(String hex) {
 HSLColor hslColorFromHex(String hex)
   => HSLColor.fromColor(colorFromHex(hex));
 
-/// Order: H, S, L, A
-HSLColor hslColorFromList(List<double> channels) {
-  final c = (n) => getChannel(n, channels);
-  return HSLColor.fromAHSL(c(3), c(0), c(1), c(2));
-}
+/// Order: A, H, S, L
+HSLColor hslColorFromList(List<double> c)
+  => HSLColor.fromAHSL(_dc(0, c), _dc(1, c), _dc(2, c), _dc(3, c));
 
-double getChannel(int n, List<double> channels)
+/// Order: A, R, G, B
+Color colorFromList(List<int> c)
+  => Color.fromARGB(_ic(0, c), _ic(1, c), _ic(2, c), _ic(3, c));
+
+HSLColor hslColorFromNormalizedList(List<double> c)
+  => hslColorFromList([_dc(0, c), _dc(1, c) * 360, _dc(2, c), _dc(3, c)]);
+
+Color colorFromNormalizedList(List<double> channels)
+  => colorFromList(channels.map((c) => (c * 255).round()).toList());
+
+double _dc(int n, List<double> channels)
+  => n < channels.length ? channels[n] : 0;
+int _ic(int n, List<int> channels)
   => n < channels.length ? channels[n] : 0;
 
 final RangeMapping rybToHslMap = RangeMapping([

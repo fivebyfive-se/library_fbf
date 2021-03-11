@@ -31,9 +31,22 @@ extension HSLColorExtensions on HSLColor {
   HSLColor deltaAlpha(double delta)
     => this.withAlpha(deltaRatio(this.alpha, delta));
 
-  /// HSLA
   List<double> toList()
-    => [this.hue, this.saturation, this.lightness, this.alpha];
+    => [this.alpha, this.hue, this.saturation, this.lightness];
+    
+  /// AHSL
+  List<double> toNormalizedList()
+    => [this.alpha, this.hue / 360, this.saturation, this.lightness];
+
+  HSLColor withChannel(int i, double v)
+    => i == 0 ? withAlpha(v)
+     : i == 1 ? withHue(v)
+     : i == 2 ? withSaturation(v)
+     : i == 3 ? withLightness(v)
+     : this;
+
+  HSLColor withNormalizedChannel(int i, double n)
+    => withChannel(i, i == 1 ? n * 360 : n);
 
   String toHex({bool includeHash = false})
     => this.toColor().toHex(includeHash: includeHash);
@@ -48,6 +61,7 @@ extension HSLColorExtensions on HSLColor {
         ].map((d) => d.toStringAsFixed(1))
           .toList().join(","),
         ")"].join("");
+
 }
 
 double deltaRatio(double value, double delta)

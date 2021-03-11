@@ -3,7 +3,7 @@ abstract class Tuple {
   final int numItems;
 
   /// Constructor
-  Tuple(this.numItems);
+  const Tuple(this.numItems);
 }
 
 
@@ -15,7 +15,7 @@ class Tuple2<T,V> extends Tuple {
   final V item2;
 
   /// Create a new instance
-  Tuple2([this.item1, this.item2])
+  const Tuple2([this.item1, this.item2])
     : super(2); 
 
   /// Create a new instance from MapEntry
@@ -33,7 +33,7 @@ class Tuple3<T,V,U> extends Tuple2<T,V> {
   final U item3;
 
   /// Create a new instance
-  Tuple3([T item1, V item2, this.item3])
+  const Tuple3([T item1, V item2, this.item3])
     : super(item1, item2);
 
   /// Create a new instance from MapEntry

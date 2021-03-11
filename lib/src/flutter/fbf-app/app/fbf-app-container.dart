@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'fbf-app-config.dart';
 
-class FbfAppContainer<C extends FbfAppConfig> extends InheritedWidget {
+class FbfAppContainer extends InheritedWidget {
   const FbfAppContainer({
     Key key,
     @required this.config,
@@ -11,7 +11,7 @@ class FbfAppContainer<C extends FbfAppConfig> extends InheritedWidget {
        assert(child != null),
        super(key: key, child: child);
 
-  final C config;
+  final FbfAppConfig config;
 
   @override
   bool updateShouldNotify(covariant InheritedWidget oldWidget) {

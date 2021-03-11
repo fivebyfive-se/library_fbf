@@ -47,5 +47,5 @@ class FbfAppConfig<T extends FbfTheme, R extends FbfPageRouteList> {
     );
 
   static C of<C extends FbfAppConfig>(BuildContext context)
-    => FbfAppContainer.of<FbfAppContainer<C>>(context)?.config;
+    => FbfAppContainer.of<FbfAppContainer>(context)?.config as C;
 }
