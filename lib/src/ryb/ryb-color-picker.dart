@@ -146,7 +146,8 @@ abstract class RYBPainter<C extends RYBController> extends CustomPainter {
 
   static Widget build<X extends RYBPainter>(X painter, PickerStateChange onChange) {
     return GestureDetector(
-      onTapUp: (tap) => onChange?.call(painter.controller.tap(tap.localPosition)),
+      onPanUpdate: (details) 
+        => onChange?.call(painter.controller.tap(details.localPosition)),
       child: CustomPaint(
         painter: painter,
         size: painter.controller.size

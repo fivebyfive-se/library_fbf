@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../../../app.dart';
-import '../page-data/scaffold-off-mixins.dart';
 
-typedef FbfFabMenuItemBuilder<T>
-  = FbfFabMenuItem<T> Function(T item);
+typedef FbfFabMenuItemBuilder
+  = FbfFabMenuItem Function(String item);
 
-class FbfFabMenu<T,C extends FbfAppConfig> extends StatelessWidget {
+class FbfFabMenu<C extends FbfAppConfig> extends StatelessWidget {
   FbfFabMenu({
     this.title,
     this.titleIcon,
@@ -17,8 +16,8 @@ class FbfFabMenu<T,C extends FbfAppConfig> extends StatelessWidget {
   });
 
   final String title;
-  final List<FbfFabMenuItem<T>> items;
-  final Function(T) onSelect;
+  final List<FbfFabMenuItem> items;
+  final Function(String) onSelect;
   final Color titleColor;
   final Color titleBackgroundColor;
   final Widget titleIcon;
@@ -58,22 +57,23 @@ class FbfFabMenu<T,C extends FbfAppConfig> extends StatelessWidget {
     );
   }
 
-  static void showBottomSheet<X,C extends FbfAppConfig>({BuildContext context,
+  static void showBottomSheet<C extends FbfAppConfig>({BuildContext context,
     String title,
     Widget titleIcon,
     Color titleColor,
     Color titleBackgroundColor,
-    List<FbfFabMenuItem<X>> items,
-    Function(X) onSelect,
+    List<FbfFabMenuItem> items,
+    Function(String) onSelect,
   }) {
+    final theme = FbfAppConfig.of<C>(context).theme;
     showModalBottomSheet<void>(
-      backgroundColor: FbfAppConfig.of<C>(context).theme.cardBackground,
+      backgroundColor: theme.cardBackground,
       context: context,
-      builder: (context) => FbfFabMenu<X,C>(
+      builder: (context) => FbfFabMenu<C>(
         title: title,
         titleIcon: titleIcon,
-        titleColor: titleColor,
-        titleBackgroundColor: titleBackgroundColor,
+        titleColor: titleColor ?? theme.onPrimary,
+        titleBackgroundColor: titleBackgroundColor ?? theme.primaryBackground,
         items: items,
         onSelect: onSelect, 
       )
@@ -81,10 +81,10 @@ class FbfFabMenu<T,C extends FbfAppConfig> extends StatelessWidget {
   }
 }
 
-class FbfFabMenuItem<T> {
+class FbfFabMenuItem {
   FbfFabMenuItem({this.value, this.icon, this.title, this.subtitle});
 
-  final T value;
+  final String value;
   final Widget icon;
   final String title;
   final String subtitle;

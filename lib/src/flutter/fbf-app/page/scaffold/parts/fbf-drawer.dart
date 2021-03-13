@@ -76,7 +76,6 @@ class FbfDrawer<C extends FbfAppConfig> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final fbfApp = FbfAppConfig.of<C>(context);
-    final currentRoute = ModalRoute.of(context).settings.name;
 
     return Drawer(
       child: Container(

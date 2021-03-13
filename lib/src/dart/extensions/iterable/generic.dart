@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import '../../models/tuple.dart';
 
 typedef MapFunc<T,V> = V Function(T item);
@@ -38,6 +40,15 @@ extension FbfIterableExtensionsGeneric on Iterable {
       (item, idx) => MapEntry<int,T>(idx, item),
       start
     );
+  }
+
+  /// Get an iterable of ratios representing positions within
+  /// this iterable
+  Iterable<double> indicesToRatios([int start = 0]) sync* {
+    if (start < length) {
+      yield start == 0 ? 0.0 : (start + 1) / length;
+      yield* indicesToRatios(start + 1);
+    }
   }
 
 

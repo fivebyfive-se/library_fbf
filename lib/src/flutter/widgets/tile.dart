@@ -27,8 +27,8 @@ class FbfTile<C extends FbfAppConfig> extends StatelessWidget {
   }) => FbfAppBuilder<C>(
     builder: (context, fbf) => ListTile(
       leading: icon == null ? null : Icon(icon),
-      title: Text(title),
-      subtitle: Text(subtitle ?? ''),
+      title: Text(title, style: fbf.theme.fontTheme.textTheme.subtitle1),
+      subtitle: Text(subtitle ?? '', style: fbf.theme.fontTheme.textTheme.subtitle2),
     )
   );
 

@@ -23,6 +23,10 @@ class FbfTheme {
     this.appBarBackground,
     this.appBarForeground,
 
+    Color onPrimary,
+    Color onSecondary,
+    Color onTertiary,
+
     ColorTriad focus,
     ColorTriad highlight,
   
@@ -49,6 +53,10 @@ class FbfTheme {
   }) :
       this.focusTriad = focus ?? primaryTriad,
       this.highlightTriad = highlight ?? secondaryTriad,
+
+      this.onPrimary = onPrimary ?? foreground,
+      this.onSecondary = onSecondary ?? foreground,
+      this.onTertiary = onTertiary ?? foreground,
 
       this.backgroundGradient = backgroundGradient 
         ?? background.gradientTo(background.withAlpha(0x80)),
@@ -82,6 +90,10 @@ class FbfTheme {
   final ColorTriad primaryTriad;
   final ColorTriad secondaryTriad;
   final ColorTriad tertiaryTriad;
+
+  final Color onPrimary;
+  final Color onSecondary;
+  final Color onTertiary;
 
   final ColorTriad focusTriad;
   final ColorTriad highlightTriad;
@@ -126,6 +138,12 @@ class FbfTheme {
   Color get tertiaryAccent => isDark ? tertiaryTriad.light : tertiaryTriad.dark;
   Color get focusAccent => isDark ? focusTriad.light : focusTriad.dark;
   Color get highlightAccent => isDark ? highlightTriad.light : highlightTriad.dark;
+
+  Color get primaryBackground => !isDark ? primaryTriad.light : primaryTriad.dark;
+  Color get secondaryBackground => !isDark ? secondaryTriad.light : secondaryTriad.dark;
+  Color get tertiaryBackground => !isDark ? tertiaryTriad.light : tertiaryTriad.dark;
+  Color get focusBackground => !isDark ? focusTriad.light : focusTriad.dark;
+  Color get highlightBackground => !isDark ? highlightTriad.light : highlightTriad.dark;
 
   @override
   int get hashCode => hashList([

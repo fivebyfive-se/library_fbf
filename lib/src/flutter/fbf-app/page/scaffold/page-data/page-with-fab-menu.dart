@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../parts/fbf-fab-menu.dart';
 
-abstract class FbfPageWithFabMenu<T> {
-  FabMenuConfig<T> get fabMenuConfig;
+abstract class FbfPageWithFabMenu {
+  FabMenuConfig get fabMenuConfig;
 }
 
-class FabMenuConfig<T> {
+class FabMenuConfig {
   FabMenuConfig({
     this.title,
     this.titleIcon,
@@ -18,7 +18,7 @@ class FabMenuConfig<T> {
   final IconData fabIcon;
   final String title;
   final IconData titleIcon;
-  final Function(T) onSelect;
-  final List<FbfFabMenuItem<T>> menuItems;
+  final Function(String) onSelect;
+  final List<FbfFabMenuItem> menuItems;
 }
 

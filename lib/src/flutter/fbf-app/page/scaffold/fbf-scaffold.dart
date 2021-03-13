@@ -35,6 +35,8 @@ class FbfScaffold<C extends FbfAppConfig, D extends FbfPageData> extends Statele
           bottomNavigationBar: _scaffoldBottomNavigationBar(),
           drawer: _scaffoldDrawer(),
           floatingActionButton: _scaffoldFab(),
+          floatingActionButtonLocation: 
+            FloatingActionButtonLocation.centerDocked,
           body: builder(context, appConfig, pageData)
       );
 
@@ -66,7 +68,7 @@ class FbfScaffold<C extends FbfAppConfig, D extends FbfPageData> extends Statele
         backgroundColor: appConfig.theme.primaryAccent,
         child: Icon(fabMenuConf.fabIcon, color: appConfig.theme.background),
 
-        onPressed: () => FbfFabMenu.showBottomSheet<String,C>(
+        onPressed: () => FbfFabMenu.showBottomSheet<C>(
           context: context,
           items: fabMenuConf.menuItems,
           title: fabMenuConf.title,

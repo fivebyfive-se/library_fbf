@@ -27,4 +27,15 @@ extension FbfStringExtensions on String {
     }
     return this;
   }
+
+  /// Converts the first character of this string to uppercase
+  String ucFirst() {
+    return this[0].toUpperCase() + this.substring(1);
+  }
+
+    /// Converts the first character of this string to lowercase
+  String lcFirst() {
+    return this[0].toLowerCase() + this.substring(1);
+  }
+
 }

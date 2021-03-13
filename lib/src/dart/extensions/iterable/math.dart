@@ -1,7 +1,11 @@
+import '../_helper.dart';
+
 import 'generic.dart';
 
-
 extension FbfIterableExtensionsNum on Iterable {
+  T randomElement<T>()
+    => this.elementAt(FbfExtensionsHelper.rng.nextInt(length));
+
   /// Get average value of iterable of numbers
   double avg<T extends num>()
     => sum<T>() / length.toDouble();
