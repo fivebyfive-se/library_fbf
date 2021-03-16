@@ -11,7 +11,7 @@ class NumRange<T extends num> {
   /// [count] elements
   Iterable<double> toIterable(int count, [int start = 0]) sync* {
     if (start < count) {
-      yield lerp(start == 0 ? 0.0 : (start+1) / count);
+      yield lerp(start / (count-1));
       yield* toIterable(count, start + 1);
     }
   }
