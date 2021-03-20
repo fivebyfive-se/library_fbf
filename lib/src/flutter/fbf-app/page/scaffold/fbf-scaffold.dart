@@ -1,12 +1,12 @@
-import 'package:fbf/src/flutter/fbf-app/page/scaffold/page-data/page-with-bottom-navigation.dart';
-import 'package:fbf/src/flutter/fbf-app/page/scaffold/page-data/page-with-drawer.dart';
 import 'package:flutter/material.dart';
 
 import '../../app/fbf-app-config.dart';
-import 'page-data/scaffold-off-mixins.dart';
-import 'page-data/page-with-fab-menu.dart';
-
 import '../fbf-page-data.dart';
+
+import 'page-data/scaffold-off-mixins.dart';
+import 'page-data/page-with-bottom-navigation.dart';
+import 'page-data/page-with-drawer.dart';
+import 'page-data/page-with-fab-menu.dart';
 
 import 'parts/fbf-bottom-nav-bar.dart';
 import 'parts/fbf-drawer.dart';

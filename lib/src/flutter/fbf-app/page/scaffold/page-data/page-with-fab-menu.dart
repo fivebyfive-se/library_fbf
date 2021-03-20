@@ -21,4 +21,3 @@ class FabMenuConfig {
   final Function(String) onSelect;
   final List<FbfFabMenuItem> menuItems;
 }
-

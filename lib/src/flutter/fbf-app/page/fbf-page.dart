@@ -12,7 +12,6 @@ abstract class FbfPage<D extends FbfPageData> extends StatefulWidget {
   final String uuid;
 }
 
-
 extension FbfPageStateExtensions on State<FbfPage> {
   FbfAppConfig get appConfig => FbfAppConfig.of(context);
   FbfPageData get pageData => FbfPageData.of(context);

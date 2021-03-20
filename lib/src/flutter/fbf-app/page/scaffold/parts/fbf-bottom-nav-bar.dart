@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import '../../../app.dart';
 import '../../../theme.dart';
 
-import '../page-data/scaffold-off-mixins.dart';
-
 class FbfBottomNavigation<C extends FbfAppConfig> extends StatefulWidget {
   FbfBottomNavigation({this.pages});
 

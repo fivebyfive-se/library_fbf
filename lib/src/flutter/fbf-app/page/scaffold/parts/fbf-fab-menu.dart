@@ -37,7 +37,9 @@ class FbfFabMenu<C extends FbfAppConfig> extends StatelessWidget {
                 )
               )
             ),
+
             Divider(),
+
             ...items.map(
               (item) {
                 return ListTile(
@@ -66,6 +68,7 @@ class FbfFabMenu<C extends FbfAppConfig> extends StatelessWidget {
     Function(String) onSelect,
   }) {
     final theme = FbfAppConfig.of<C>(context).theme;
+    
     showModalBottomSheet<void>(
       backgroundColor: theme.cardBackground,
       context: context,
