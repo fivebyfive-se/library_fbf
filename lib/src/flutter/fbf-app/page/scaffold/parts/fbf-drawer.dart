@@ -22,9 +22,9 @@ class FbfDrawer<C extends FbfAppConfig> extends StatelessWidget {
               icon, 
               size: fbfApp.size(4),
               color: color ?? fbfApp.theme.primaryAccent),
-        title: Text(title, style: TextStyle(color: color)),
+        title: Text(title, style: fbfApp.textTheme.subtitle1.copyWith(color: color)),
         subtitle: subtitle == null ? null
-          : Text(subtitle),
+          : Text(subtitle, style: fbfApp.textTheme.bodyText2.copyWith(color: color)),
         shape: RoundedRectangleBorder(side: BorderSide.none),
         onTap: onTap,
       );

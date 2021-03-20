@@ -1,3 +1,4 @@
+import 'package:fbf/src/flutter/fbf-app/app/fbf-viewport.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
@@ -48,4 +49,7 @@ class FbfAppConfig<T extends FbfTheme, R extends FbfPageRouteList> {
 
   static C of<C extends FbfAppConfig>(BuildContext context)
     => FbfAppContainer.of<FbfAppContainer>(context)?.config as C;
+
+  static FbfViewport view(BuildContext context)
+    => FbfViewport.of(context);
 }
