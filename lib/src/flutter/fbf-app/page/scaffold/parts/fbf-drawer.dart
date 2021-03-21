@@ -69,6 +69,8 @@ class FbfDrawer<C extends FbfAppConfig> extends StatelessWidget {
         fbfApp.theme.foreground,
         item.onTap
       );
+    } else if (item is FbfDrawerDivider) {
+      return Divider();
     }
     return null;
   }
@@ -95,12 +97,17 @@ enum FbfDrawerItemType {
   header,
   subheading,
   navigationLink,
-  urlLink
+  urlLink,
+  divider
 }
 
 abstract class FbfDrawerItem {
   FbfDrawerItem(this.type);
   final FbfDrawerItemType type;
+}
+
+class FbfDrawerDivider extends FbfDrawerItem {
+  FbfDrawerDivider(): super(FbfDrawerItemType.divider);
 }
 
 class FbfDrawerHeader extends FbfDrawerItem {

@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:fbf/hsluv.dart';
 import 'package:fbf/ryb.dart';
 import 'package:flutter/painting.dart';
 
@@ -142,31 +143,43 @@ class HSLuvColor {
   HSLuvColor complementary()
     => withHue(hue + 180.0);
 
+  /// Return contrast ratio between this instance and [other]
   double contrastWith(HSLuvColor other)
     => lightness > other.lightness 
       ? Contrast.contrastRatio(lightness, other.lightness)
       : Contrast.contrastRatio(other.lightness, lightness);
 
-  /// Return a copy with lightness inverted to contrast 
-  /// with this color
-  HSLuvColor invertLightness([double minRatio = Contrast.W3C_CONTRAST_TEXT]) {
-    final bool goLighter = lightness < 50;
-    final double step = goLighter ? 1.0 : -1.0;
-    double candidate = goLighter 
-    ? Contrast.lighterMinL(minRatio) 
-      : Contrast.darkerMaxL(minRatio, lightness);
-
+  /// Return a copy which contrasts with [other]
+  HSLuvColor ensureContrast(
+    HSLuvColor other, [
+      double minRatio = Contrast.W3C_CONTRAST_TEXT,
+  ]) {
+    final bool goLighter = (
+      lightness == other.lightness 
+      ? lightness >= 50 
+      : lightness > other.lightness
+    );
+    final double step = goLighter ? 0.25 : -0.25;
+    double candidate = lightness;
+    final check = () => candidate > other.lightness
+      ? Contrast.contrastRatio(candidate, other.lightness)
+      : Contrast.contrastRatio(other.lightness, candidate);
     while (
-      candidate < 100 && candidate > 0.0 
-      && Contrast.contrastRatio(candidate, lightness) < minRatio
-    ) {
-      candidate += step;
+      candidate < 100.0 && 
+      candidate > 0.0 &&
+      check() < minRatio) {
+        candidate += step;
     }
     return withLightness(candidate.clamp(0.0, 100.0));
   }
 
   /// Return a copy with lightness inverted to contrast 
-  /// with this color
+  /// with this instance
+  HSLuvColor invertLightness([double minRatio = Contrast.W3C_CONTRAST_TEXT])
+    => ensureContrast(this, minRatio);
+
+  /// Return a copy with lightness inverted to contrast 
+  /// with this color, and greyscaled
   HSLuvColor invertLightnessGreyscale()
     => invertLightness().withSaturation(0.0);
 
