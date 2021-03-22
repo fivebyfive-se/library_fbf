@@ -156,18 +156,16 @@ class HSLuvColor {
   ]) {
     final bool goLighter = (
       lightness == other.lightness 
-      ? lightness >= 50 
+      ? other.lightness < 50 
       : lightness > other.lightness
     );
-    final double step = goLighter ? 0.25 : -0.25;
+    final double step = goLighter ? 0.1 : -0.1;
     double candidate = lightness;
-    final check = () => candidate > other.lightness
+    final check = () => goLighter
       ? Contrast.contrastRatio(candidate, other.lightness)
       : Contrast.contrastRatio(other.lightness, candidate);
-    while (
-      candidate < 100.0 && 
-      candidate > 0.0 &&
-      check() < minRatio) {
+      
+    while (candidate < 100.0 && candidate > 0.0 && check() < minRatio) {
         candidate += step;
     }
     return withLightness(candidate.clamp(0.0, 100.0));

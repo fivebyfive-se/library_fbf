@@ -281,6 +281,22 @@ class FbfTheme {
       textTheme: fontTheme.textTheme,
       fontFamily: fontTheme.fontBody,
       
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+          backgroundColor: primary.toMaterialProp(),
+          foregroundColor: onPrimary.toMaterialProp()
+        )
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: ButtonStyle(
+          foregroundColor: secondaryAccent.toMaterialProp()
+        )
+      ),
+      popupMenuTheme: PopupMenuThemeData(
+        color: cardBackground,
+        textStyle: TextStyle(color: cardForeground)
+      ),
+
       visualDensity: VisualDensity.adaptivePlatformDensity,
       appBarTheme: AppBarTheme(
         backgroundColor: appBarBackground,
@@ -296,4 +312,9 @@ class FbfTheme {
       fontTheme.codeTheme
     )
   );
+}
+
+extension ColorButtonExtensions on Color {
+  MaterialStateProperty<Color> toMaterialProp()
+    => MaterialStateProperty.all(this);
 }
