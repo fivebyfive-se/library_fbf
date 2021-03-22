@@ -44,7 +44,15 @@ class FbfScaffold<C extends FbfAppConfig, D extends FbfPageData> extends Statele
   Widget _scaffoldAppBar()
     => (pageData is Scaffold_AppBar_Off)
         ? null
-        : AppBar(title: Text(pageData.pageTitle));
+        : AppBar(
+            title: Text(
+              pageData.pageTitle,
+              style: TextStyle(color: appConfig.theme.appBarForeground),
+            ),
+            backgroundColor: appConfig.theme.appBarBackground,
+            foregroundColor: appConfig.theme.appBarForeground,
+            primary: true,
+          );
 
   @protected
   Widget _scaffoldBottomNavigationBar()

@@ -14,6 +14,7 @@ class FbfDrawer<C extends FbfAppConfig> extends StatelessWidget {
     String subtitle, 
     IconData icon, 
     Color color,
+    Color secondaryColor,
     [void Function() onTap]
   )
     => ListTile(
@@ -24,7 +25,8 @@ class FbfDrawer<C extends FbfAppConfig> extends StatelessWidget {
               color: color ?? fbfApp.theme.primaryAccent),
         title: Text(title, style: fbfApp.textTheme.subtitle1.copyWith(color: color)),
         subtitle: subtitle == null ? null
-          : Text(subtitle, style: fbfApp.textTheme.bodyText2.copyWith(color: color)),
+          : Text(subtitle, style: fbfApp.textTheme.bodyText2
+              .copyWith(color: secondaryColor)),
         shape: RoundedRectangleBorder(side: BorderSide.none),
         onTap: onTap,
       );
@@ -44,7 +46,8 @@ class FbfDrawer<C extends FbfAppConfig> extends StatelessWidget {
         item.title,
         item.subtitle,
         item.icon,
-        item.color ?? fbfApp.theme.foreground
+        item.color ?? fbfApp.theme.primaryAccent,
+        fbfApp.theme.foreground
       );
     } else if (item is FbfDrawerNavigationLink) {
       final currentRoute = ModalRoute.of(context).settings.name;
@@ -56,6 +59,7 @@ class FbfDrawer<C extends FbfAppConfig> extends StatelessWidget {
         currentRoute == item.pageRoute 
           ? fbfApp.theme.primaryAccent
           : fbfApp.theme.foreground,
+        fbfApp.theme.foreground,
         () {
           Navigator.of(context).pushReplacementNamed(item.pageRoute);
         }
@@ -66,6 +70,7 @@ class FbfDrawer<C extends FbfAppConfig> extends StatelessWidget {
         item.title,
         item.subtitle,
         item.icon,
+        fbfApp.theme.primaryAccent,
         fbfApp.theme.foreground,
         item.onTap
       );

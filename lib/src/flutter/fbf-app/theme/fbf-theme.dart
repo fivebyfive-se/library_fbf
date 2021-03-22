@@ -294,8 +294,14 @@ class FbfTheme {
       ),
       popupMenuTheme: PopupMenuThemeData(
         color: cardBackground,
-        textStyle: TextStyle(color: cardForeground)
+        textStyle: TextStyle(color: cardForeground),
       ),
+      accentTextTheme: fontTheme.textTheme.apply(
+        displayColor: onPrimary,
+        bodyColor: primaryAccent
+      ),
+      accentIconTheme: IconThemeData(color: primaryAccent),
+      primaryTextTheme: fontTheme.textTheme,
 
       visualDensity: VisualDensity.adaptivePlatformDensity,
       appBarTheme: AppBarTheme(
